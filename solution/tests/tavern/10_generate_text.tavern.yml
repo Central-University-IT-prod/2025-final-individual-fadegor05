@@ -1,0 +1,11 @@
+test_name: Генерация текста
+
+stages:
+  - name: 'Создание текста по заголовку'
+    request:
+      url: '{BASE_URL}/advertisers/42c763a4-9ccb-4e51-a99c-8e502aa53259/generate/text'
+      method: POST
+      json:
+        title: 'С нами путешествовать в Самару легко – билеты, отель и все заботы берем на себя!'
+    response:
+      status_code: 200

@@ -1,0 +1,27 @@
+test_name: Обновление рекламодателей
+
+stages:
+  - name: 'Получение рекламодателя №2 до обновления'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035'
+      method: GET
+    response:
+      status_code: 200
+      json: !include components/advertisers/advertiser2bu.yml
+
+  - name: 'Обновление рекламодателей'
+    request:
+      url: '{BASE_URL}/advertisers/bulk'
+      method: POST
+      json:
+        - !include components/advertisers/advertiser2.yml
+    response:
+      status_code: 201
+
+  - name: 'Получение рекламодателя №1 после обновления'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035'
+      method: GET
+    response:
+      status_code: 200
+      json: !include components/advertisers/advertiser2.yml

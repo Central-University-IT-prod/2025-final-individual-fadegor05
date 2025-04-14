@@ -1,0 +1,145 @@
+test_name: Обновление ml скора рекламодателей и клиентов
+
+stages:
+  - name: 'Обновление ml скора пользователь №1 рекламодатель №1'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 4356a52d-c8e4-4ccd-b4b7-733b54181252
+        advertiser_id: 42c763a4-9ccb-4e51-a99c-8e502aa53259
+        score: 72
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №1 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 4356a52d-c8e4-4ccd-b4b7-733b54181252
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 65
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №2 рекламодатель №1'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: bec07769-8e9e-4b61-b7b1-45848cadfe95
+        advertiser_id: 42c763a4-9ccb-4e51-a99c-8e502aa53259
+        score: 7
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №2 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: bec07769-8e9e-4b61-b7b1-45848cadfe95
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 74
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №3 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 1f9a753a-4121-4605-bfd7-d642f685043f
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 24
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №4 рекламодатель №1'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 222483bf-b835-49e1-932d-1e820e0dbc1d
+        advertiser_id: 42c763a4-9ccb-4e51-a99c-8e502aa53259
+        score: 92
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №4 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 222483bf-b835-49e1-932d-1e820e0dbc1d
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 42
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №5 рекламодатель №1'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 6c6d2f1b-4e1e-4fb7-9a7e-2b1067387652
+        advertiser_id: 42c763a4-9ccb-4e51-a99c-8e502aa53259
+        score: 36
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №5 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 6c6d2f1b-4e1e-4fb7-9a7e-2b1067387652
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 26
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №6 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: d5f987e5-64be-43e0-a28f-ce31c8e5bed4
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 17
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №7 рекламодатель №1'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 550ad5c3-76e0-4aef-86aa-fa9f64bba0de
+        advertiser_id: 42c763a4-9ccb-4e51-a99c-8e502aa53259
+        score: 0
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №7 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 550ad5c3-76e0-4aef-86aa-fa9f64bba0de
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 87
+    response:
+      status_code: 200
+
+  - name: 'Обновление ml скора пользователь №9 рекламодатель №2'
+    request:
+      url: '{BASE_URL}/ml-scores'
+      method: POST
+      json:
+        client_id: 6157ab84-52cb-4a88-8096-bba8ab074ad8
+        advertiser_id: f834ae27-0705-4291-8c40-ed84af1ba035
+        score: 3
+    response:
+      status_code: 200

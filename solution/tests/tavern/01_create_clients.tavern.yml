@@ -1,0 +1,37 @@
+test_name: Создание клиентов
+
+stages:
+  - name: 'Создание клиентов'
+    request:
+      url: '{BASE_URL}/clients/bulk'
+      method: POST
+      json:
+        - !include components/clients/client1.yml
+        - !include components/clients/client2.yml
+        - !include components/clients/client3.yml
+        - !include components/clients/client4.yml
+        - !include components/clients/client5.yml
+        - !include components/clients/client6.yml
+        - !include components/clients/client7.yml
+        - !include components/clients/client8.yml
+        - !include components/clients/client9bu.yml
+    response:
+      status_code: 201
+      json:
+        - !include components/clients/client1.yml
+        - !include components/clients/client2.yml
+        - !include components/clients/client3.yml
+        - !include components/clients/client4.yml
+        - !include components/clients/client5.yml
+        - !include components/clients/client6.yml
+        - !include components/clients/client7.yml
+        - !include components/clients/client8.yml
+        - !include components/clients/client9bu.yml
+
+  - name: 'Получение клиента №2'
+    request:
+      url: '{BASE_URL}/clients/bec07769-8e9e-4b61-b7b1-45848cadfe95'
+      method: GET
+    response:
+      status_code: 200
+      json: !include components/clients/client2.yml

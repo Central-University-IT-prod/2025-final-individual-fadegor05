@@ -1,0 +1,12 @@
+cost_per_impression: 22.4
+cost_per_click: 35.2
+ad_title: Найди свою скидку в «Пятёрочке»!
+ad_text: Каждый день — новые акции и спецпредложения. Забегай за выгодными покупками уже сегодня!
+targeting:
+  location: ТЦ Мегасити
+  age_from: 15
+  gender: MALE
+impressions_limit: 9
+clicks_limit: 4
+start_date: 0
+end_date: 5

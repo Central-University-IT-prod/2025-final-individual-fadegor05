@@ -1,0 +1,214 @@
+{
+	"id": null,
+	"uid": "campaign-dashboard",
+	"title": "Показатели рекламных кампаний и рекламодателей",
+	"timezone": "browser",
+	"panels": [
+		{
+			"title": "Общее количество показов по дням",
+			"type": "timeseries",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT to_timestamp(date) AS time, COUNT(*) AS impressions FROM impression GROUP BY time ORDER BY time ASC;",
+					"format": "time_series"
+				}
+			],
+			"gridPos": { "x": 0, "y": 0, "w": 6, "h": 8 }
+		},
+		{
+			"title": "Общее количество переходов по дням",
+			"type": "timeseries",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT to_timestamp(date) AS time, COUNT(*) AS clicks FROM click GROUP BY time ORDER BY time ASC;",
+					"format": "time_series"
+				}
+			],
+			"gridPos": { "x": 6, "y": 0, "w": 6, "h": 8 }
+		},
+		{
+			"title": "Общие затраты на показы по дням",
+			"type": "timeseries",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT to_timestamp(date) AS time, SUM(cost) AS total_cost FROM impression GROUP BY time ORDER BY time ASC;",
+					"format": "time_series"
+				}
+			],
+			"gridPos": { "x": 0, "y": 6, "w": 6, "h": 8 }
+		},
+		{
+			"title": "Общие затраты на переходы по дням",
+			"type": "timeseries",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT to_timestamp(date) AS time, SUM(cost) AS total_cost FROM click GROUP BY time ORDER BY time ASC;",
+					"format": "time_series"
+				}
+			],
+			"gridPos": { "x": 6, "y": 6, "w": 6, "h": 8 }
+		},
+		{
+			"title": "Общая конверсия",
+			"type": "timeseries",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT to_timestamp(i.date) AS time, CASE WHEN COUNT(i.id) = 0 THEN 0 ELSE (COUNT(c.id)::decimal / COUNT(i.id)) * 100 END AS conversion_rate FROM impression i LEFT JOIN click c ON i.campaign_id = c.campaign_id AND i.date = c.date GROUP BY time ORDER BY time ASC;",
+					"format": "time_series"
+				}
+			],
+			"gridPos": { "x": 0, "y": 16, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Общие показатели",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT 'Показов' AS metric, COUNT(*) AS total FROM impression UNION ALL SELECT 'Переходов' AS metric, COUNT(*) AS total FROM click UNION ALL SELECT 'Общие затраты на показы' AS metric, SUM(cost) FROM impression UNION ALL SELECT 'Общие затраты на переходы' AS metric, SUM(cost) FROM click;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 0, "y": 18, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Показов по рекламным кампаниям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT c.ad_title AS campaign, COUNT(i.id) AS impressions FROM impression i JOIN campaign c ON i.campaign_id = c.id GROUP BY c.ad_title ORDER BY impressions DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 12, "y": 14, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Переходов по рекламным кампаниям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT c.ad_title AS campaign, COUNT(i.id) AS clicks FROM click i JOIN campaign c ON i.campaign_id = c.id GROUP BY c.ad_title ORDER BY clicks DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 12, "y": 14, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Затраты на показы по рекламным кампаниям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT c.ad_title AS campaign, SUM(cl.cost) AS spent_on_impressions FROM impression cl JOIN campaign c ON cl.campaign_id = c.id GROUP BY c.ad_title ORDER BY spent_on_impressions DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 12, "y": 14, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Затраты на клики по рекламным кампаниям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT c.ad_title AS campaign, SUM(cl.cost) AS spent_on_clicks FROM click cl JOIN campaign c ON cl.campaign_id = c.id GROUP BY c.ad_title ORDER BY spent_on_clicks DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 12, "y": 14, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Показы по рекламодателям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT a.name AS advertiser, COUNT(i.id) AS impressions FROM impression i JOIN campaign c ON i.campaign_id = c.id JOIN advertiser a ON c.advertiser_id = a.id GROUP BY a.name ORDER BY impressions DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 0, "y": 32, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Переходы по рекламодателям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT a.name AS advertiser, COUNT(cl.id) AS clicks FROM click cl JOIN campaign c ON cl.campaign_id = c.id JOIN advertiser a ON c.advertiser_id = a.id GROUP BY a.name ORDER BY clicks DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 12, "y": 32, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Затраты на показы по рекламодателям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT a.name AS advertiser, SUM(i.cost) AS spent_on_impressions FROM impression i JOIN campaign c ON i.campaign_id = c.id JOIN advertiser a ON c.advertiser_id = a.id GROUP BY a.name ORDER BY spent_on_impressions DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 0, "y": 48, "w": 12, "h": 8 }
+		},
+		{
+			"title": "Затраты на переходы по рекламодателям",
+			"type": "barchart",
+			"datasource": "PostgreSQL",
+			"targets": [
+				{
+					"rawSql": "SELECT a.name AS advertiser, SUM(cl.cost) AS spent_on_clicks FROM click cl JOIN campaign c ON cl.campaign_id = c.id JOIN advertiser a ON c.advertiser_id = a.id GROUP BY a.name ORDER BY spent_on_clicks DESC;",
+					"format": "table"
+				}
+			],
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "grouped"
+			},
+			"gridPos": { "x": 12, "y": 48, "w": 12, "h": 8 }
+		}
+	],
+	"schemaVersion": 30,
+	"version": 1
+}

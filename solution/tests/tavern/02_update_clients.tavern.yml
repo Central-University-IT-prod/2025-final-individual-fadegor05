@@ -1,0 +1,27 @@
+test_name: Обновление клиентов
+
+stages:
+  - name: 'Получение клиента №9 до обновления'
+    request:
+      url: '{BASE_URL}/clients/6157ab84-52cb-4a88-8096-bba8ab074ad8'
+      method: GET
+    response:
+      status_code: 200
+      json: !include components/clients/client9bu.yml
+
+  - name: 'Создание клиентов'
+    request:
+      url: '{BASE_URL}/clients/bulk'
+      method: POST
+      json:
+        - !include components/clients/client9.yml
+    response:
+      status_code: 201
+
+  - name: 'Получение клиента №9 после обновления'
+    request:
+      url: '{BASE_URL}/clients/6157ab84-52cb-4a88-8096-bba8ab074ad8'
+      method: GET
+    response:
+      status_code: 200
+      json: !include components/clients/client9.yml

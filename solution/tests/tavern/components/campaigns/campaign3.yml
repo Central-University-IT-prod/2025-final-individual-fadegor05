@@ -1,0 +1,10 @@
+cost_per_impression: 43.9
+cost_per_click: 85.6
+ad_title: Сгонять в Калининград дешевле, чем в соседний город?
+ad_text: С Aviasales это реально! Лови лучшие авиабилеты и путешествуй без лишних затрат.
+targeting:
+  location: Аэропорт Курумоч
+impressions_limit: 4
+clicks_limit: 2
+start_date: 1
+end_date: 2

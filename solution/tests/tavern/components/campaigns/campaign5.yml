@@ -1,0 +1,11 @@
+cost_per_impression: 42.4
+cost_per_click: 67.7
+ad_title: Бонусы копятся — выгода растёт!
+ad_text: Оформи карту лояльности X5 и экономь на покупках в любимых магазинах. Получай скидки и персональные предложения!
+targeting:
+  gender: ALL
+  location: ТЦ Мегасити
+impressions_limit: 4
+clicks_limit: 1
+start_date: 1
+end_date: 4

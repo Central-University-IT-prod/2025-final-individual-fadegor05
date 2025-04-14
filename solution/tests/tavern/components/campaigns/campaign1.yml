@@ -1,0 +1,10 @@
+cost_per_impression: 43.4
+cost_per_click: 25.2
+ad_title: Билеты дешевле, чем твой обед!
+ad_text: Лови горячие авиабилеты по ценам, которые приятно удивят. Путешествуй больше — трать меньше!
+targeting:
+  age_from: 20
+impressions_limit: 4
+clicks_limit: 2
+start_date: 0
+end_date: 3

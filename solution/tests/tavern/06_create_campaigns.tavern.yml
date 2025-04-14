@@ -1,0 +1,112 @@
+test_name: Создание рекламных кампаний
+
+stages:
+  - name: 'Создание рекламной кампании №1 рекламодателем №1'
+    request:
+      url: '{BASE_URL}/advertisers/42c763a4-9ccb-4e51-a99c-8e502aa53259/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign1.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №2 рекламодателем №1'
+    request:
+      url: '{BASE_URL}/advertisers/42c763a4-9ccb-4e51-a99c-8e502aa53259/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign2.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №3 рекламодателем №1'
+    request:
+      url: '{BASE_URL}/advertisers/42c763a4-9ccb-4e51-a99c-8e502aa53259/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign3.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №4 рекламодателем №1'
+    request:
+      url: '{BASE_URL}/advertisers/42c763a4-9ccb-4e51-a99c-8e502aa53259/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign4.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №5 рекламодателем №2'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign5.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №6 рекламодателем №2'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign6.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №7 рекламодателем №2'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign7.yml
+    response:
+      status_code: 201
+
+  - name: 'Создание рекламной кампании №8 рекламодателем №2 [1]'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign8.yml
+    response:
+      status_code: 201
+      save:
+        json:
+          advertiser2_campaign8_id: campaign_id
+
+  - name: 'Получение рекламной кампании №8 рекламодателем №2 [1]'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns/{advertiser2_campaign8_id}'
+      method: GET
+    response:
+      status_code: 200
+
+  - name: 'Получение рекламной кампании №8 рекламодателем №1'
+    request:
+      url: '{BASE_URL}/advertisers/42c763a4-9ccb-4e51-a99c-8e502aa53259/campaigns/{advertiser2_campaign8_id}'
+      method: GET
+    response:
+      status_code: 403
+
+  - name: 'Получение рекламной кампании №8 несуществующим рекламодателем'
+    request:
+      url: '{BASE_URL}/advertisers/1d98f03b-733c-430e-813e-df34f9953a44/campaigns/{advertiser2_campaign8_id}'
+      method: GET
+    response:
+      status_code: 404
+
+  - name: 'Удаление рекламной кампании №8 рекламодателем №2'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns/{advertiser2_campaign8_id}'
+      method: DELETE
+    response:
+      status_code: 204
+
+  - name: 'Получение рекламной кампании №8 рекламодателем №2 [2]'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns/{advertiser2_campaign8_id}'
+      method: GET
+    response:
+      status_code: 404
+
+  - name: 'Создание рекламной кампании №8 рекламодателем №2 [2]'
+    request:
+      url: '{BASE_URL}/advertisers/f834ae27-0705-4291-8c40-ed84af1ba035/campaigns'
+      method: POST
+      json: !include components/campaigns/campaign8.yml
+    response:
+      status_code: 201

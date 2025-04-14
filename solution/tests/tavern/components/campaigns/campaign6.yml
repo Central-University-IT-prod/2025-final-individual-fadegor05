@@ -1,0 +1,10 @@
+cost_per_impression: 23.8
+cost_per_click: 42.3
+ad_title: Твой ужин — наша забота!
+ad_text: Покупай свежие продукты в «Пятёрочке» и «Перекрёстке» рядом с домом. Качество и доступные цены каждый день!
+targeting:
+  gender: FEMALE
+impressions_limit: 5
+clicks_limit: 3
+start_date: 0
+end_date: 5

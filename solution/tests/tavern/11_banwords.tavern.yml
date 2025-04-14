@@ -1,0 +1,37 @@
+test_name: Действия с банвордами
+
+stages:
+  - name: 'Добавление банвордов'
+    request:
+      url: '{BASE_URL}/banwords/bulk'
+      method: POST
+      json:
+        - ссора
+        - хайп
+        - hype
+        - anti
+        - kokoro
+        - кокоро
+    response:
+      status_code: 200
+      json:
+        - ссора
+        - хайп
+        - hype
+        - anti
+        - kokoro
+        - кокоро
+
+  - name: 'Удаление банвордов'
+    request:
+      url: '{BASE_URL}/banwords/bulk'
+      method: DELETE
+      json:
+        - ссора
+        - kokoro
+        - плаке
+    response:
+      status_code: 200
+      json:
+        - ссора
+        - kokoro

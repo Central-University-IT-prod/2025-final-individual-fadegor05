@@ -1,0 +1,10 @@
+cost_per_impression: 36.3
+cost_per_click: 58.9
+ad_title: Всегда рядом, всегда доступно
+ad_text: X5 Retail Group — твои удобные магазины в шаговой доступности. Всё, что нужно для комфортной жизни, по честным ценам.
+targeting:
+  location: Аэропорт Курумоч
+impressions_limit: 7
+clicks_limit: 3
+start_date: 1
+end_date: 4

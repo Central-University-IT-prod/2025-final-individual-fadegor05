@@ -1,0 +1,107 @@
+services:
+  migrations:
+    build: .
+    command: ['uv', 'run', 'alembic', 'upgrade', 'head']
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: no
+  server:
+    build: .
+    command:
+      [
+        'uv',
+        'run',
+        'gunicorn',
+        'src.presentation.rest.app:create_app()',
+        '--workers',
+        '${GUNICORN_WORKERS}',
+        '--worker-class',
+        'uvicorn.workers.UvicornWorker',
+        '--bind',
+        'REDACTED:8080',
+      ]
+    ports:
+      - '${SERVER_PORT}:${SERVER_PORT}'
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    restart: always
+
+  bot:
+    build: .
+    command: ['uv', 'run', '-m', 'src.presentation.bot.app']
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+      server:
+        condition: service_started
+    restart: always
+
+  postgres:
+    image: postgres:16.6
+    env_file:
+      - .env
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}']
+      interval: 5s
+      timeout: 10s
+      retries: 20
+    command: postgres -c 'max_connections=1000'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    env_file:
+      - .env
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - postgres
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - '9000:9000'
+      - '9090:9090'
+    env_file:
+      - .env
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 1s
+      timeout: 1s
+      retries: 20
+    volumes:
+      - minio_data:/data
+    command: server --console-address ":9090" /data
+
+volumes:
+  postgres_data:
+  grafana_data:
+  minio_data:
